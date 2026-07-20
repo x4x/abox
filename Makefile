@@ -5,6 +5,7 @@
 CC      = gcc
 CFLAGS  = -Wall -Wextra -O2
 CPPFLAGS= -Iinclude
+BUILDDIR = build
 
 SRC = abox.c \
       applets/cat.c \
@@ -13,15 +14,20 @@ SRC = abox.c \
       applets/false.c \
       applets/rm.c
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(patsubst %.c,$(BUILDDIR)/%.o,$(SRC))
+TARGET = $(BUILDDIR)/abox
 
-abox: $(OBJ)
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	@mkdir -p $(dir $@)
 	$(CC) $(OBJ) -o $@
 
-%.o: %.c
+$(BUILDDIR)/%.o: %.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f abox $(OBJ)
+	rm -rf $(BUILDDIR)
 
 # end

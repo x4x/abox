@@ -5,7 +5,7 @@
 ** 20260719 x4x
 */
 
-#define _POSIX_C_SOUIRCE 200809L
+#define _POSIX_C_SOURCE 200809L
 
 #include <stdio.h>
 #include <string.h>
@@ -62,6 +62,16 @@ int main(int argc, char *argv[])
                 // run applet
                 return applettorun->mainfunc(argc - 1, argv + 1);
             }
+        }
+    } else {
+        // if program is called with applet name
+        applettorun = find_applet(base);
+        if (applettorun == NULL) {
+            printf("Unknown applet: %s\n", base);
+            return 127;
+        } else {
+            // run applet
+            return applettorun->mainfunc(argc, argv);
         }
     }
     return 1;
