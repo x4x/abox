@@ -6,13 +6,40 @@
 */
 
 #include <stdio.h>
+#include <dirent.h>
 
 #include "applets.h"
 
-int ls_main(int argc, char **argv)
+
+static int list_dir(const char *path)
 {
-    (void)argc; // unused
-    (void)argv; // unused
-    printf("ls_main called with %d arguments\n", argc);
+    DIR *dir = opendir(path);
+    if (dir == NULL) {
+        printf("Failed to open directory: %s\n", path);
+        return 1;
+    }
+
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
+        printf("%s\n", entry->d_name);
+    }
+
+    closedir(dir);
     return 0;
 }
+
+int ls_main(int argc, char **argv)
+{
+
+    if (argc < 2) {
+        return list_dir(".");
+    }
+
+    for (int i = 1; i < argc; i++) {
+        if (list_dir(argv[i]) != 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
