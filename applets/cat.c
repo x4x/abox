@@ -72,7 +72,7 @@ void concatenate_files(const char* filename1,
 
 int cat_main(int argc, char* argv[])
 {
-    FILE* file;
+    //FILE* file;
 
     //check if filename is given
     if (argc < 2) {
@@ -80,6 +80,7 @@ int cat_main(int argc, char* argv[])
                argv[0]);
         printf("       %s - filename  # write to file\n",
                argv[0]);
+        printf("              # exit CTL+D\n");
         printf("       %s dest_file - source_fiel  # append to second file\n",
                argv[0]);
         return 1;
@@ -96,7 +97,9 @@ int cat_main(int argc, char* argv[])
                 concatenate_files(argv[i], argv[i+2]);
                 i+=2;
             } else {
-            printf("%s :\n", argv[i]);
+            if(argc > 2) {
+                printf("%s :\n", argv[i]);
+            }
             print_file(argv[i]);
             printf("\n");
         }
