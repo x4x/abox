@@ -50,13 +50,13 @@ void concatenate_files(const char* filename1,
     FILE *file1 = fopen(filename1, "r+");
     if (file1 == NULL) {
         printf("Unable to open file %s\n", filename1);
-        return;
+        return 1;
     }
 
     FILE *file2 = fopen(filename2, "r");
-    if (file1 == NULL) {
+    if (file2 == NULL) {
         printf("Unable to open file %s\n", filename1);
-        return;
+        return 1;
     }
 
     fseek(file1, 0, SEEK_END);
