@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "applets.h"
+
 #define BUFSIZE 4096
 
 

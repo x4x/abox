@@ -23,7 +23,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <errno.h>
+#include <ctype.h>
+//#include <errno.h>
+
+#include "applets.h"
 
 #define BUFERSIZE 4096
 
@@ -35,23 +38,51 @@ typedef struct
     unsigned long long bytes;
 } counts_t;
 
+static bool flag_lines = false,
+            flag_words = false,
+            flag_characters = false,
+            flag_bytes = false;
+
 static int count_stream( FILE *fp, counts_t *c) {
     static unsigned char buffer[BUFERSIZE];
+    size_t n;  // byte count
     bool inword = false;
 
-    memset(c, 0, sizeof(*c));
+    memset(c, 0, sizeof(*c));  // set counters to 0
 
-
-
+    while((n = fread(buffer, 1,  BUFERSIZE, fp)) > 0 )
+    {
+        c->bytes += n;
+        for(size_t i = 0; i < n; i++) {
+            if( buffer[i] == '\n' ) {
+                c->lines ++;
+            }
+            if( isspace(buffer[i]) ) {
+                inword = false;
+            } else if( !inword ) {
+                c->words ++;
+                inword = true;
+            }
+        }
+    }
     return 0;
 }
 
+void print_counts(counts_t c, const char *filename) {
+    if (flag_lines)
+        printf("%8llu", c.lines);
+    if (flag_words)
+        printf("%8llu", c.words);
+    if (flag_bytes)
+        printf("%8llu", c.bytes);
+    if (filename != NULL)
+        printf(" %s", filename);
+    putchar('\n');
+}
+
 int wc_main(int argc, char* argv[]) {
-    bool flag_lines = false,
-         flage_words = false,
-         flage_characters = false,
-         flage_byte = false;
     int active_arg = 1;
+    counts_t total = {0};
     
     // get leading arguments
     while(  argc > active_arg &&
@@ -65,13 +96,15 @@ int wc_main(int argc, char* argv[]) {
             case 'l':
                 flag_lines = true; break;
             case 'w':
-                flage_words = true; break;
+                flag_words = true; break;
             case 'm':
-                flage_characters = true; break;
+                flag_characters = true;
+                printf("Not implemented\n"); return 1;
+                break;
             case 'c':
-                flage_byte = true; break;
+                flag_bytes = true; break;
             default:
-                fprintf(stderr, "invalid option: %c\n", *p, strerror(errno));
+                fprintf(stderr, "invalid option: %c\n", *p);
                 return(1);
             }
             //printf("point: %c\n", *p);
@@ -79,24 +112,48 @@ int wc_main(int argc, char* argv[]) {
         active_arg ++;
     }
     // default if no paramter selected
-    if(!flag_lines && !flage_byte && !flage_characters && !flage_byte) {
-        flag_lines = flage_words = flage_byte = true;
+    if(!flag_lines && !flag_words && !flag_characters && !flag_bytes) {
+        flag_lines = flag_words = flag_bytes = true;
     }
+    int cnt_options = active_arg;
     
-
-    // stdin mode
-    if( argc - active_arg == 0 ||
-        strcmp(argv[active_arg],"-")) {
-
-    }
-
-    // file mode
+    // iterrate over files
     while(argc > active_arg )
     {
-        printf("file: %s\n", argv[active_arg]);
-        active_arg ++;
+        counts_t c;
+        FILE *fp;
+
+        // stdin mode
+        if( strcmp(argv[active_arg],"-") == 0 ) {
+                fp = stdin;
+        } else {
+            // file mode
+            //printf("file: %s\n", argv[active_arg]);
+            fp = fopen(argv[active_arg], "rb");  // binary read
+            if (fp == NULL) {
+                fprintf(stderr, "Unable to open file %s\n", argv[active_arg]);
+                active_arg++;
+                continue;  // skip this file
+            }
+
+            count_stream(fp, &c);
+            print_counts(c, argv[active_arg]);
+
+            if (fp != stdin) {
+                fclose(fp);
+            }
+            total.lines += c.lines;
+            total.words += c.words;
+            total.bytes += c.bytes;
+
+            active_arg ++;
+        }
     }
 
-    fprintf(stderr, "wc: not implemented\n", strerror(errno));
+    if( active_arg - cnt_options > 1 ) {
+        print_counts(total, "total");
+    }
+    
+    //fprintf(stderr, "wc: not implemented\n");
     return 0;
 }

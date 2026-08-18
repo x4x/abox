@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "applets.h"
+
 int echo_main(int argc, char **argv)
 {
     for(int i = 1; i < argc; i++) {

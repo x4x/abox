@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include "applets.h"
+
 int touch_main(int argc, char **argv)
 {
     int fd;
@@ -21,7 +23,7 @@ int touch_main(int argc, char **argv)
     for (int i = 1; i < argc; i++) {
         fd = open(argv[i], O_CREAT | O_WRONLY, 0644);
         if ( fd == -1) {
-            printf("Failed to create file: %s\n", argv[i]);
+            fprintf(stderr, "Failed to create file: %s\n", argv[i]);
             return 1;
         }
         close(fd);

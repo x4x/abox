@@ -7,7 +7,8 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <errno.h>
+
+#include "applets.h"
 
 int pwd_main(int argc, char **argv)
 {

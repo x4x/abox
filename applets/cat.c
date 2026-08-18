@@ -7,7 +7,8 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
+
+#include "applets.h"
 
 // function to print a file contents
 void print_file(const char* filename)

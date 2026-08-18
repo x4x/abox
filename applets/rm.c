@@ -20,7 +20,7 @@ int rm_main(int argc, char **argv)
     }
     for(int i = 1; i < argc; i++) {
         if(remove(argv[i]) != 0) {
-            printf("Failed to remove file: %s\n", argv[i]);
+            fprintf(stderr, "Failed to remove file: %s\n", argv[i]);
             returnerror = 1;
         }
     }

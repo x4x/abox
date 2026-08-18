@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include <dirent.h>
-#include <errno.h>
 
 #include "applets.h"
 

@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <sys/stat.h>
 
+#include "applets.h"
+
 int mkdir_main(int argc, char **argv)
 {
     if (argc < 2) {
@@ -17,7 +19,7 @@ int mkdir_main(int argc, char **argv)
 
     for (int i = 1; i < argc; i++) {
         if (mkdir(argv[i], 0755) == -1) {
-            printf("Failed to create directory: %s\n", argv[i]);
+            fprintf(stderr, "Failed to create directory: %s\n", argv[i]);
             return 1;
         }
     }
