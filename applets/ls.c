@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <dirent.h>
+#include <errno.h>
 
 #include "applets.h"
 
@@ -15,7 +16,7 @@ static int list_dir(const char *path)
 {
     DIR *dir = opendir(path);
     if (dir == NULL) {
-        printf("Failed to open directory: %s\n", path);
+        fprintf(stderr, "Failed to open directory: %s\n", path);
         return 1;
     }
 
@@ -30,7 +31,6 @@ static int list_dir(const char *path)
 
 int ls_main(int argc, char **argv)
 {
-
     if (argc < 2) {
         return list_dir(".");
     }

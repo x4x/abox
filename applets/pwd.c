@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <errno.h>
 
 int pwd_main(int argc, char **argv)
 {
@@ -15,7 +16,7 @@ int pwd_main(int argc, char **argv)
 
     char path[1024];
     if (getcwd(path, sizeof(path)) == NULL) {
-        printf("Failed to get current directory\n");
+        fprintf(stderr ,"Failed to get current directory\n");
         return 1;
     }
     printf("%s\n", path);

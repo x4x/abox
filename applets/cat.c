@@ -7,14 +7,15 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 // function to print a file contents
 void print_file(const char* filename)
 {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-       printf("Unable to open file %s\n", filename);
-       return 1;
+       fprintf(stderr, "Unable to open file %s\n", filename);
+       return;
     }
 
     //read and print the file
@@ -30,8 +31,8 @@ void write_to_file(const char* filename)
 {
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
-       printf("Unable to open file %s\n", filename);
-       return 1;
+       fprintf(stderr, "Unable to open file %s\n", filename);
+       return;
     }
 
     //read and print the file
@@ -49,14 +50,14 @@ void concatenate_files(const char* filename1,
 {
     FILE *file1 = fopen(filename1, "r+");
     if (file1 == NULL) {
-        printf("Unable to open file %s\n", filename1);
-        return 1;
+        fprintf(stderr, "Unable to open file %s\n", filename1);
+        return;
     }
 
     FILE *file2 = fopen(filename2, "r");
     if (file2 == NULL) {
-        printf("Unable to open file %s\n", filename1);
-        return 1;
+        fprintf(stderr, "Unable to open file %s\n", filename1);
+        return;
     }
 
     fseek(file1, 0, SEEK_END);

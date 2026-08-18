@@ -17,7 +17,8 @@ SRC = abox.c \
       applets/touch.c \
 	  applets/mkdir.c \
 	  applets/pwd.c \
-	  applets/cp.c
+	  applets/cp.c \
+	  applets/wc.c
 
 OBJ = $(patsubst %.c,$(BUILDDIR)/%.o,$(SRC))
 TARGET = $(BUILDDIR)/abox

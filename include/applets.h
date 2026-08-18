@@ -11,4 +11,5 @@ int touch_main(int argc, char **argv);
 int mkdir_main(int argc, char **argv); 
 int pwd_main(int argc, char **argv);
 int cp_main(int argc, char **argv);
+int wc_main(int argc, char **argv);
 #endif // APPLETS_H

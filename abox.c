@@ -29,6 +29,7 @@ static struct applet applets[] = {
     {"mkdir", mkdir_main},
     {"pwd", pwd_main},
     {"cp", cp_main},
+    {"wc", wc_main},
     {NULL, NULL}
 };
 
