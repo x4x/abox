@@ -2,6 +2,7 @@
 ** A custom sync by x4x
 ** 20260818 x4x
 */
+#define _DEFAULT_SOURCE  // sync is not in the _POSIX_C_SOURCE
 //#include <stdio.h>
 #include <unistd.h>
 

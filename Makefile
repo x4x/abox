@@ -3,8 +3,10 @@
 # @version 0.1
 
 CC      = gcc
-CFLAGS  = -Wall -Wextra -O2
-CPPFLAGS= -Iinclude
+CFLAGS  = -std=c17 -Wall -Wextra -O2
+#CFLAGS  = -std=c99 -Wall -Wextra -O2
+#CPPFLAGS= -Iinclude
+CPPFLAGS = -Iinclude -D_POSIX_C_SOURCE=200809L  
 BUILDDIR = build
 
 SRC = abox.c \

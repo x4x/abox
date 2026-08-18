@@ -4,9 +4,7 @@
 ** A custom cut by x4x
 ** 20260719 x4x
 */
-
-#define _POSIX_C_SOURCE 200809L
-
+//#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <string.h>
 #include <libgen.h>
