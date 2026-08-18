@@ -1,7 +1,7 @@
 /*
 ** cat.c
 **
-** A custom cut by x4x
+** A custom cat by x4x
 ** 20250318 x4x
 */
 

@@ -1,7 +1,7 @@
 /*
 ** true.c
 **
-** A custom cut by x4x
+** A custom true by x4x
 ** 20250320 x4x
 */
 

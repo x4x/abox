@@ -16,7 +16,7 @@
 ** -l: Count the number of newlines in each file
 ** -w: Count the number of words
 **
-** A custom cut by x4x
+** A custom wc by x4x
 ** 20260810 x4x
 */
 #include <stdio.h>

@@ -1,7 +1,7 @@
 /*
 ** false.c
 **
-** A custom cut by x4x
+** A custom false by x4x
 ** 20250320 x4x
 */
 

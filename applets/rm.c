@@ -1,7 +1,7 @@
 /*
 ** rm.c
 **
-** A custom cut by x4x
+** A custom rm by x4x
 ** 20250320 x4x
 */
 

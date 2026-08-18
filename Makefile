@@ -16,6 +16,7 @@ SRC = abox.c \
       applets/rm.c \
       applets/touch.c \
 	  applets/mkdir.c \
+	  applets/sync.c \
 	  applets/pwd.c \
 	  applets/cp.c \
 	  applets/wc.c
