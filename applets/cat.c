@@ -7,8 +7,11 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "applets.h"
+
+static bool flag_linenumbers = false;
 
 // function to print a file contents
 void print_file(const char* filename)
@@ -19,10 +22,14 @@ void print_file(const char* filename)
        return;
     }
 
+    unsigned int linenumber = 0;
     //read and print the file
     char ch;
     while ((ch = fgetc(file)) != EOF) {
         putchar(ch);
+        if(flag_linenumbers && ch == '\n') {
+            printf("%i ", linenumber++);
+        }
     }
 
     fclose(file);
@@ -78,18 +85,27 @@ int cat_main(int argc, char* argv[])
 
     //check if filename is given
     if (argc < 2) {
-        printf("Usage: %s filename1 [filename2 ...]\n",
+        printf("Usage: %s -n <file1>   show line numbers\n\n",
                argv[0]);
-        printf("       %s - filename  # write to file\n",
+        printf("       %s <file1> [<file2> ...]\n",
+               argv[0]);
+        printf("       %s - <file>  # write to file\n",
                argv[0]);
         printf("              # exit CTL+D\n");
-        printf("       %s dest_file - source_fiel  # append to second file\n",
+        printf("       %s <dest_file> - <source_fiel>  # append to second file\n",
                argv[0]);
         return 1;
     }
 
+    // parameters check
+    int i =1;
+    if(strcmp(argv[i], "-n") == 0) {
+        i = 2;
+        flag_linenumbers = true;
+    }
+
     // call read file
-    for (int i = 1; i < argc; i++) {
+    for (; i < argc; i++) {
         // '-' is the write file operator
         if(strcmp(argv[i], "-") == 0) {
             write_to_file(argv[++i]);
