@@ -23,26 +23,3 @@ cd build
 ln -s ./busybox cat
 ./busybox/cat
 ```
-
-## build packages
-
-#### arch AUR
-
-```bash
-makepkg --printsrcinfo > .SRCINFO
-
-# build and install package
-makepkg -si
-
-# rebuild
-makepkg -ef
-
-# remove
-sudo pacman -R abox
-```
-
-#### RPM
-
-```bash
-
-```
