@@ -8,6 +8,17 @@ This is just a fun project!!
 make -j4
 ```
 
+### build packages
+
+#### arch AUR
+
+```bash
+makepkg --printsrcinfo > .SRCINFO
+
+# build and install package
+makepkg -si
+```
+
 ## use
 
 ```bash
@@ -19,3 +30,4 @@ cd build
 ln -s ./busybox cat
 ./busybox/cat
 ```
+

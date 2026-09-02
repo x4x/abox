@@ -1,6 +1,23 @@
 # Created by https://www.toptal.com/developers/gitignore/api/emacs,vim,visualstudiocode,c,c++
 # Edit at https://www.toptal.com/developers/gitignore?templates=emacs,vim,visualstudiocode,c,c++
 
+/abox
+
+### ArchLinuxPackages ###
+*.tar
+*.tar.*
+*.jar
+*.exe
+*.msi
+*.zip
+*.tgz
+*.log
+*.log.*
+*.sig
+
+pkg/
+src/
+
 ### C ###
 /build/
 
