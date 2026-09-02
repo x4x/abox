@@ -2,12 +2,16 @@
 # @file
 # @version 0.1
 
-CC      = gcc
-CFLAGS  = -std=c17 -Wall -Wextra -O2
+CC       = gcc
+CFLAGS   = -std=c17 -Wall -Wextra -O2
 #CFLAGS  = -std=c99 -Wall -Wextra -O2
 #CPPFLAGS= -Iinclude
 CPPFLAGS = -Iinclude -D_POSIX_C_SOURCE=200809L  
 BUILDDIR = build
+
+PREFIX   ?= /usr
+BINDIR   ?= $(PREFIX)/bin
+DESTDIR  ?=
 
 SRC = abox.c \
       applets/cat.c \
@@ -36,6 +40,10 @@ $(TARGET): $(OBJ)
 $(BUILDDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+install: all
+	install -d "$(DESTDIR)$(BINDIR)"
+	install -m 0755 build/abox "$(DESTDIR)$(BINDIR)/abox"
 
 clean:
 	rm -rf $(BUILDDIR)

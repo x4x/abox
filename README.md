@@ -8,23 +8,6 @@ This is just a fun project!!
 make -j4
 ```
 
-### build packages
-
-#### arch AUR
-
-```bash
-makepkg --printsrcinfo > .SRCINFO
-
-# build and install package
-makepkg -si
-
-# rebuild
-makepkg -ef
-
-# remove
-sudo pacman -R abox
-```
-
 ## use
 
 ```bash
@@ -41,3 +24,25 @@ ln -s ./busybox cat
 ./busybox/cat
 ```
 
+## build packages
+
+#### arch AUR
+
+```bash
+makepkg --printsrcinfo > .SRCINFO
+
+# build and install package
+makepkg -si
+
+# rebuild
+makepkg -ef
+
+# remove
+sudo pacman -R abox
+```
+
+#### RPM
+
+```bash
+
+```
