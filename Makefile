@@ -2,11 +2,13 @@
 # @file
 # @version 0.1
 
-CC       = gcc
-CFLAGS   = -std=c17 -Wall -Wextra -O2
-#CFLAGS  = -std=c99 -Wall -Wextra -O2
-#CPPFLAGS= -Iinclude
-CPPFLAGS = -Iinclude -D_POSIX_C_SOURCE=200809L  
+CC       ?= gcc
+CFLAGS   ?= -std=c17 -Wall -Wextra -O2
+#CFLAGS  ?= -std=c99 -Wall -Wextra -O2
+#CPPFLAGS?= -Iinclude
+CPPFLAGS += -Iinclude -D_POSIX_C_SOURCE=200809L
+LDFLAGS  ?=
+LDLIBS   ?=
 BUILDDIR = build
 
 PREFIX   ?= /usr
@@ -35,7 +37,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	@mkdir -p $(dir $@)
-	$(CC) $(OBJ) -o $@
+	$(CC) $(LDFLAGS) $(OBJ) $(LDLIBS) -o $@
 
 $(BUILDDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
