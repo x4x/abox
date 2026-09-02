@@ -17,6 +17,12 @@ makepkg --printsrcinfo > .SRCINFO
 
 # build and install package
 makepkg -si
+
+# rebuild
+makepkg -ef
+
+# remove
+sudo pacman -R abox
 ```
 
 ## use
@@ -24,7 +30,11 @@ makepkg -si
 ```bash
 cd build
 
-./abox cat 
+./abox echo "Hello World!" > t.txt
+./abox ls
+./abox cat t.txt
+./abox wc t.txt
+./abox rm t.txt
 
 # or
 ln -s ./busybox cat

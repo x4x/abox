@@ -1,6 +1,6 @@
 # Maintainer: x4x 1581191+x4x@users.noreply.github.com
 pkgname=abox
-pkgver=r15.3d1becc
+pkgver=r16.de5062a
 pkgrel=1
 pkgdesc="A minimal busybox-like collection of basic Unix tools"
 arch=('x86_64')
