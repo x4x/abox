@@ -45,8 +45,8 @@ static struct Flags flags= {
     .debug      = false,
 };
 
-void nc_print_help() {
-    printf("nc [Options] [ADDRESS] [PORT]\n");
+void nc_print_help(char* app_name) {
+    printf("%s [Options] [ADDRESS] [PORT]\n", app_name);
     printf("-l  server mode, ADDRESS can be blank for default ip\n");
     printf("-4  use IPv4\n");
     printf("-6  use IPv6\n");
@@ -142,11 +142,11 @@ int nc_main(int argc, char** argv) {
                 }else if(argv[active_arg][i] == 'v') {
                     flags.debug = true;
                 }else if(argv[active_arg][i] == 'h') {
-                    nc_print_help();
+                    nc_print_help(argv[0]);
                     return 0;
                 } else {
                     fprintf(stderr, "Unknown option: -%c\n", argv[active_arg][i]);
-                    nc_print_help();
+                    nc_print_help(argv[0]);
                     return 1;
                 }
             }
@@ -165,11 +165,11 @@ int nc_main(int argc, char** argv) {
             }
         } else {
             fprintf(stderr, "Not enouth arguments!\n");
-            nc_print_help();
+            nc_print_help(argv[0]);
             return 1;
         }
     } else {
-        nc_print_help();
+        nc_print_help(argv[0]);
         return 0;
     }
 
@@ -220,6 +220,8 @@ int nc_main(int argc, char** argv) {
 
     if(flags.sockmode == SOCK_DGRAM ) { // udp mode
         printf("udp not implemented\n");
+        // TDDO: implement udp server
+        // TODO: implement udp client
     } else { // normal/tcp mode
         if(flags.mode == AI_PASSIVE ) {  // server mode
             // setsockopt

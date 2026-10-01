@@ -16,7 +16,12 @@ static bool flag_linenumbers = false;
 // function to print a file contents
 void print_file(const char* filename)
 {
-    FILE *file = fopen(filename, "r");
+    FILE *file;
+    if(strcmp(filename, "-") == 0) {
+        file = stdin;
+    } else {
+        file = fopen(filename, "r");
+    }
     if (file == NULL) {
        fprintf(stderr, "Unable to open file %s\n", filename);
        return;
@@ -25,11 +30,17 @@ void print_file(const char* filename)
     unsigned int linenumber = 0;
     //read and print the file
     char ch;
+    char chold;
+    if(flag_linenumbers) {  // first line
+        printf("%i ", linenumber++);
+    }
     while ((ch = fgetc(file)) != EOF) {
-        putchar(ch);
-        if(flag_linenumbers && ch == '\n') {
-            printf("%i ", linenumber++);
+        chold = ch;
+        if(flag_linenumbers && chold == '\n') {
+            printf("\n%i ", linenumber++);
+            continue;
         }
+        putchar(ch);
     }
 
     fclose(file);
@@ -79,49 +90,52 @@ void concatenate_files(const char* filename1,
     fclose(file2);
 }
 
+void cat_print_help(char* app_name) {
+    printf("Usage: %s -n <file1>  # show line numbers\n", app_name);
+    printf("       %s <file1> [<file2> ...]\n", app_name);
+    printf("       %s - <file>  # write to file\n", app_name);
+    printf("              # exit CTL+D\n");
+    printf("       %s <dest_file> - <source_fiel>  # append to second file\n", app_name);
+}
+
 int cat_main(int argc, char* argv[])
 {
-    //FILE* file;
-
-    //check if filename is given
-    if (argc < 2) {
-        printf("Usage: %s -n <file1>   show line numbers\n\n",
-               argv[0]);
-        printf("       %s <file1> [<file2> ...]\n",
-               argv[0]);
-        printf("       %s - <file>  # write to file\n",
-               argv[0]);
-        printf("              # exit CTL+D\n");
-        printf("       %s <dest_file> - <source_fiel>  # append to second file\n",
-               argv[0]);
-        return 1;
-    }
-
     // parameters check
-    int i =1;
-    if(strcmp(argv[i], "-n") == 0) {
-        i = 2;
-        flag_linenumbers = true;
+    int active_arg = 1;
+    if(argc > 1) {
+        if(strcmp(argv[active_arg], "-h") == 0) {
+            cat_print_help(argv[0]);
+            return 1;
+        }
+        if(strcmp(argv[active_arg], "-n") == 0) {
+            active_arg++;
+            flag_linenumbers = true;
+        }
+    }
+    //check if filename is given
+    if(argc <= active_arg) {
+        print_file("-");
+        return 0;
     }
 
     // call read file
-    for (; i < argc; i++) {
+    for (; active_arg < argc; active_arg++) {
         // '-' is the write file operator
-        if(strcmp(argv[i], "-") == 0) {
-            write_to_file(argv[++i]);
+        if(strcmp(argv[active_arg], "-") == 0) {
+            write_to_file(argv[++active_arg]);
         }
-        else if(i+1 < argc  &&
-               strcmp(argv[i+1], "-") == 0 ) {
-                concatenate_files(argv[i], argv[i+2]);
-                i+=2;
+        else if(active_arg+1 < argc  &&
+               strcmp(argv[active_arg+1], "-") == 0 ) {
+                concatenate_files(argv[active_arg], argv[active_arg+2]);
+                active_arg+=2;
             } else {
             if(argc > 2) {
-                printf("%s :\n", argv[i]);
+                printf("%s :\n", argv[active_arg]);
             }
-            print_file(argv[i]);
+            print_file(argv[active_arg]);
             printf("\n");
         }
-        
     }
+
     return 0;
 }
