@@ -21,5 +21,5 @@ cd build
 
 # or
 ln -s ./abox cat
-./abox/cat
+cat
 ```
