@@ -34,7 +34,7 @@ static struct Flags flags= {
     .maxdepth     = -1,
 };
 
-void print_help() {
+void find_print_help() {
     printf("Usage: find [PATH] [-name PATTERN] [-type f|d|df] [-maxdepth n]\n");
     printf("ther is currently just a singe argument for each param supported!\n");
 }
@@ -120,7 +120,7 @@ int find_main(int argc, char** argv)
               argv[active_arg][0] == '-' // is param
         ) {
             if(strcmp(argv[active_arg], "-help") == 0) {
-                print_help();
+                find_print_help();
             }else if(strcmp(argv[active_arg], "-name") == 0) {
                 active_arg++;
                 if(argc <= active_arg ) {
@@ -146,7 +146,7 @@ int find_main(int argc, char** argv)
                         }
                     }else {
                         printf("Unsuported param\n");
-                        print_help();
+                        find_print_help();
                         return 1;
                     }
                 }
@@ -159,7 +159,7 @@ int find_main(int argc, char** argv)
                 flags.maxdepth = strtol(argv[active_arg], NULL, 10);
             } else {
                 printf("Unknown param\n");
-                print_help();
+                find_print_help();
                 return 1;
             }
             active_arg++;

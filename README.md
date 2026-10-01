@@ -20,6 +20,6 @@ cd build
 ./abox rm t.txt
 
 # or
-ln -s ./busybox cat
-./busybox/cat
+ln -s ./abox cat
+./abox/cat
 ```

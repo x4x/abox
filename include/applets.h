@@ -17,6 +17,7 @@ int cp_main(int argc, char **argv);
 int wc_main(int argc, char **argv);
 int sleep_main(int argc, char **argv);
 int find_main(int argc, char **argv);
+int nc_main(int argc, char **argv);
 
 struct applet {
     const char *name;
@@ -38,6 +39,7 @@ static struct applet applets[] = {
     {"wc", wc_main},
     {"sleep", sleep_main},
     {"find", find_main},
+    {"nc", nc_main},
     {NULL, NULL}
 };
 #endif // APPLETS_H
